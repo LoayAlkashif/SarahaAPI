@@ -5,10 +5,12 @@ import {
   sendMessage,
 } from "./message.controller.js";
 import { verifyToken } from "../../middleware/verifyToken.js";
+import { validate } from "../../middleware/validate.js";
+import { sendValidation } from "./message.validation.js";
 
 const messageRouter = Router();
 messageRouter.use(verifyToken);
-messageRouter.post("/", sendMessage);
+messageRouter.post("/", validate(sendValidation), sendMessage);
 messageRouter.get("/", getMessages);
 messageRouter.delete("/:id", deleteMessage);
 export default messageRouter;
